@@ -1,16 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './pages/router';
+import { GlobalStyle } from './styles/GlobalStyle';
 
 const App = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                
-            </header>
-        </div>
-    );
+  return (
+    <>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;
