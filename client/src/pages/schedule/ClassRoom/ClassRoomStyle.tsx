@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 export const Main = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 1000px;
+
+  margin-block: 30px;
 `;
 export const Container = styled.div`
   background-color: white;
@@ -18,13 +20,14 @@ export const ButtonContainer = styled.div`
   background-color: #d9d9d9;
   width: 100%;
   height: 40px;
-  margin-block: 30px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   gap: 10px;
+
+  margin-bottom: 20px;
 `;
 
 export const TableContainer = styled.div`
@@ -90,15 +93,21 @@ export const Days = styled.div<{ days: number }>`
   gap: 0;
 `;
 
-export const Day = styled.div`
+export const Day = styled.div<{ week: String }>`
   display: flex;
   justify-content: center;
   align-items: center;
 
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
 
   border-left: 1px solid #b3bbc0;
+  color: ${(props) =>
+    props.week === '토'
+      ? '#481FEB'
+      : props.week === '일'
+      ? '#FF613E'
+      : 'black'};
   /* box-shadow: 0 0 0 0.5px #ccc; */
 `;
 
@@ -125,22 +134,23 @@ export const ScheduleBar = styled.div`
 
 export const ClassContainer = styled.div`
   width: 100%;
-  min-height: 50px;
-  max-height: 70px;
+  min-height: 40px;
+  max-height: 40px;
 
   display: flex;
 `;
 
 export const ClassTitle = styled.div`
   width: 10%;
-  min-height: 50px;
-  max-height: 70px;
+  min-height: 40px;
+  max-height: 40px;
   display: flex;
   align-items: center;
 
   font-weight: bold;
   padding-left: 10px;
   /* border: 1px solid #b3bbc0; */
+  font-size: 14px;
   box-shadow: 0 0 0 0.5px #ccc;
 `;
 
@@ -152,7 +162,29 @@ export const ClassWrapper = styled.div<{ days: number }>`
 `;
 
 export const Classroom = styled.div`
-  min-height: 50px;
-  max-height: 70px;
+  width: 100%;
+  min-height: 40px;
+  max-height: 40px;
   box-shadow: 0 0 0 0.5px #ccc;
+  position: relative;
+`;
+
+export const Bar = styled.div`
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  background-color: lightblue;
+  z-index: 1;
+  top: 10%;
+`;
+
+export const Organization = styled.div`
+  width: 200%; // 이건 나중에 바의 개수만큼
+
+  position: absolute;
+  padding-left: 10px;
+
+  z-index: 2;
+
+  top: 20%;
 `;

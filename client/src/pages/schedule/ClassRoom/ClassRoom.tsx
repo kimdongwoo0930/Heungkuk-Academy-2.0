@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Bar,
   ButtonContainer,
   ClassContainer,
   Classroom,
@@ -11,6 +12,7 @@ import {
   Day,
   Days,
   Main,
+  Organization,
   ScheduleBar,
   ScheduleContainer,
   TableContainer,
@@ -22,12 +24,17 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import { TbPlayerTrackNext, TbPlayerTrackPrev } from 'react-icons/tb';
 import { rooms } from '../../../assets/rooms';
 import {
-  openBarType,
   TableBodyType,
   TableDateType,
   TableHeadType,
 } from '../../../types/schedule/ClassRoomType';
-import { getMonthDaysAndWeekdays } from '../../../utils/ClassRoomFC';
+import {
+  createReservationList,
+  getMonthDaysAndWeekdays,
+  transformReservations,
+} from '../../../utils/ClassRoom';
+
+import { exampleData } from '../../../data/ClassRoom';
 
 export const ClassRoom = () => {
   // 날짜 구하기
@@ -36,6 +43,8 @@ export const ClassRoom = () => {
   const month = selectedDate.getMonth() + 1;
   const monthDaysAndWeekdays = getMonthDaysAndWeekdays(year, month);
 
+  const Data = transformReservations(exampleData);
+  // 예시 데이터
   return (
     <Main>
       <Container>
@@ -53,6 +62,7 @@ export const ClassRoom = () => {
           <TableBody
             selectedDate={selectedDate}
             DaysAndWeekdaysList={monthDaysAndWeekdays}
+            Data={Data}
           />
         </TableContainer>
       </Container>
@@ -97,13 +107,13 @@ const TableHead = (props: TableHeadType) => {
         {/* 요일 */}
         <Days days={props.DaysAndWeekdaysList.length}>
           {props.DaysAndWeekdaysList.map((n, index) => {
-            return <Day>{n.day}</Day>;
+            return <Day week={n.weekday}>{n.day}</Day>;
           })}
         </Days>
         {/* 날짜 */}
         <Days days={props.DaysAndWeekdaysList.length}>
           {props.DaysAndWeekdaysList.map((n, index) => {
-            return <Day>{n.weekday}</Day>;
+            return <Day week={n.weekday}>{n.weekday}</Day>;
           })}
         </Days>
       </div>
@@ -119,6 +129,9 @@ const TableBody = (props: TableBodyType) => {
       prevState.map((isOpen, i) => (i === index ? !isOpen : isOpen))
     );
   };
+
+  const year = props.selectedDate.toString().split('-')[0];
+  const month = props.selectedDate.toString().split('-')[1];
 
   return (
     <>
@@ -137,12 +150,41 @@ const TableBody = (props: TableBodyType) => {
 
             {openBar[index] &&
               rooms[room].map((classroom) => {
+                const list = props.Data[classroom];
+                let Data: any[] = [];
+                if (list) {
+                  Data = createReservationList(
+                    props.Data[classroom],
+                    props.DaysAndWeekdaysList.length
+                  );
+                }
+
+                /**
+                 * 데이터를
+                 * [리스트에 날짜만큼 채우고 그중 해당 날짜만 예약번호로 바꾸면 되지 않을까 ]
+                 */
                 return (
                   <ClassContainer>
                     <ClassTitle>{classroom}</ClassTitle>
                     <ClassWrapper days={props.DaysAndWeekdaysList.length}>
                       {props.DaysAndWeekdaysList.map((n, index) => {
-                        return <Classroom></Classroom>;
+                        return (
+                          <Classroom>
+                            {Data[index] && <Bar></Bar>}
+                            {list &&
+                              list.map(
+                                (item) =>
+                                  parseInt(
+                                    item.start.toString().split('-')[2]
+                                  ) ===
+                                    index + 1 && (
+                                    <Organization>
+                                      {item.organization}
+                                    </Organization>
+                                  )
+                              )}
+                          </Classroom>
+                        );
                       })}
                     </ClassWrapper>
                   </ClassContainer>
@@ -154,3 +196,8 @@ const TableBody = (props: TableBodyType) => {
     </>
   );
 };
+
+/**
+ *
+ *
+ */

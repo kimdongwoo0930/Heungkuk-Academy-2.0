@@ -1,3 +1,4 @@
+import { TransformedReservation, example } from './../../utils/ClassRoom';
 export interface TableDateType {
   selectedDate: Date;
   setSelectDate: (date: Date) => void;
@@ -6,7 +7,7 @@ export interface TableDateType {
 export interface TableHeadType {
   DaysAndWeekdaysList: {
     day: number;
-    weekday: String;
+    weekday: string;
   }[];
   selectedDate: Date;
 }
@@ -14,9 +15,10 @@ export interface TableHeadType {
 export interface TableBodyType{
   DaysAndWeekdaysList: {
     day: number;
-    weekday: String;
+    weekday: string;
   }[];
   selectedDate : Date;
+  Data:example;
 }
 
 export interface openBarType{
@@ -26,3 +28,7 @@ export interface openBarType{
   분임실: boolean,
   다목적실 : boolean
 }
+
+
+
+

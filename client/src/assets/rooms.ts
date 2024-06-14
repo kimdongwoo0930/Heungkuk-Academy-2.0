@@ -9,3 +9,7 @@ export const rooms: Rooms = {
   분임실: [106, 205, 206],
   다목적실: ['A', 'B'],
 };
+
+export const weeks:String[] = [
+  "일","월","화","수","목","금","토"
+]

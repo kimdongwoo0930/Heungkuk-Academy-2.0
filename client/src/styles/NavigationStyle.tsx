@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const SideBar = styled.div<{ width: number; onMouse: boolean }>`
   width: ${(props) => props.width}px;
   min-height: 100vh;
-  height: 100%;
+
   background-color: #351b6f;
   transition: 0.7s;
   padding-inline: 10px;

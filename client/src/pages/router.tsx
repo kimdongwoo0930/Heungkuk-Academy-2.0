@@ -7,6 +7,7 @@ import { ClassRoom } from './schedule/ClassRoom/ClassRoom';
 import { Room } from './schedule/Room/Room';
 import { CreateSurvey } from './survey/CreateSurvey/CreateSurvey';
 import { SurveyList } from './survey/SurveyList/SurveyList';
+import { Answer } from './survey/Answer/Answer';
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ export const router = createBrowserRouter([
       { path: 'create', element: <CreateSurvey /> },
       { path: 'list', element: <SurveyList /> },
     ],
+    errorElement: <NotFound />,
+  },
+  {
+    path: '/survey/answer/:id',
+    element: <Answer />,
     errorElement: <NotFound />,
   },
 ]);
